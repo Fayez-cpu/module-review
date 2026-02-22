@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { use, useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
 
 type ModuleItem = {
   code: string;
@@ -111,6 +112,8 @@ export default function CoursePage({ params }: Props) {
   const { course } = use(params);
   const [selectedYear, setSelectedYear] = useState<number>(1);
   const courseName = prettifyCourseSlug(course);
+  const { data: session } = useSession();
+  console.log("User session:", session);
 
   const displayedModules = useMemo(
     () => modulesByYear[selectedYear] ?? [],
