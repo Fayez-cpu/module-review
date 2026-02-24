@@ -1,192 +1,260 @@
-export default function Home() {
-  const featuredModules = [
-    {
-      name: "Software Engineering",
-      code: "5CS501",
-      rating: "4.7/5",
-      reviews: 182,
-      detail: "Team projects, real client briefs, and practical agile delivery.",
-    },
-    {
-      name: "Data Analytics",
-      code: "5CS502",
-      rating: "4.5/5",
-      reviews: 146,
-      detail: "Python-driven analysis with meaningful, real-world datasets.",
-    },
-    {
-      name: "Cyber Security Fundamentals",
-      code: "5CS503",
-      rating: "4.6/5",
-      reviews: 129,
-      detail: "Hands-on labs in threat modelling, hardening, and risk control.",
-    },
-  ];
+// app/page.tsx
+"use client"
+import Link from 'next/link'
 
-  const steps = [
-    {
-      title: "Select your course",
-      text: "Choose your degree pathway and see the modules attached to it.",
-    },
-    {
-      title: "Leave a module review",
-      text: "Rate teaching quality, workload, assessment fairness, and support.",
-    },
-    {
-      title: "Help future students",
-      text: "Share honest feedback so others can make informed choices.",
-    },
-  ];
+export default function HomePage() {
 
   return (
-    <div className="bg-light">
-      <nav className="navbar navbar-expand-lg bg-white border-bottom sticky-top">
-        <div className="container py-2">
-          <a className="navbar-brand fw-bold text-primary" href="#">
-            University of Derby
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarMain"
-            aria-controls="navbarMain"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarMain">
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link" href="#how-it-works">
-                  How it works
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#modules">
-                  Modules
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#cta">
-                  Get started
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-      <header className="py-5 bg-primary text-white">
-        <div className="container py-4">
-          <div className="row align-items-center g-4">
+    <>
+      {/* Hero Section - Bold Editorial Style */}
+      <section className="position-relative overflow-hidden bg-dark text-white">
+        <div 
+          className="position-absolute w-100 h-100 opacity-10"
+          style={{
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          }}
+        ></div>
+        
+        <div className="container position-relative py-5" style={{ minHeight: '85vh' }}>
+          <div className="row align-items-center" style={{ minHeight: '75vh' }}>
             <div className="col-lg-7">
-              <p className="text-uppercase mb-2 fw-semibold small">Module Review Platform</p>
-              <h1 className="display-5 fw-bold mb-3">
-                Honest student feedback for every University of Derby module
+              <div className="mb-3">
+                <span className="badge bg-primary px-3 py-2 rounded-pill">
+                  Student Reviews Platform
+                </span>
+              </div>
+              
+              <h1 
+                className="display-1 fw-bold mb-4"
+                style={{
+                  fontSize: 'clamp(3rem, 8vw, 6rem)',
+                  lineHeight: '1.1',
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                Real Reviews.<br />
+                <span className="text-primary">Real Students.</span>
               </h1>
-              <p className="lead mb-4 opacity-75">
-                Discover what current students say about teaching quality, assessment style,
-                and workload before picking your modules.
+              
+              <p className="lead mb-4 text-white-50" style={{ fontSize: '1.25rem', maxWidth: '600px' }}>
+                Make informed module choices with honest feedback from students who've been there. 
+                No marketing spin—just authentic experiences.
               </p>
-              <div className="d-flex flex-wrap gap-3">
-                <a href="#cta" className="btn btn-light btn-lg px-4 fw-semibold">
-                  Leave a Review
-                </a>
-                <a href="#modules" className="btn btn-outline-light btn-lg px-4">
-                  Browse Modules
-                </a>
-              </div>
-            </div>
-            <div className="col-lg-5">
-              <div className="card shadow-sm border-0">
-                <div className="card-body p-4">
-                  <h2 className="h5 text-dark mb-3">Platform Snapshot</h2>
-                  <div className="d-flex justify-content-between border-bottom py-2 text-dark">
-                    <span>Total reviews</span>
-                    <strong>1,240+</strong>
-                  </div>
-                  <div className="d-flex justify-content-between border-bottom py-2 text-dark">
-                    <span>Modules listed</span>
-                    <strong>180+</strong>
-                  </div>
-                  <div className="d-flex justify-content-between py-2 text-dark">
-                    <span>Courses covered</span>
-                    <strong>35+</strong>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+              
 
-      <section id="how-it-works" className="py-5">
-        <div className="container">
-          <div className="text-center mb-5">
-            <h2 className="fw-bold">How it works</h2>
-            <p className="text-secondary mb-0">
-              A quick way to share and discover module experiences across your course.
-            </p>
-          </div>
-          <div className="row g-4">
-            {steps.map((step, index) => (
-              <div className="col-md-4" key={step.title}>
-                <div className="card h-100 shadow-sm border-0">
-                  <div className="card-body">
-                    <span className="badge text-bg-primary mb-3">Step {index + 1}</span>
-                    <h3 className="h5">{step.title}</h3>
-                    <p className="text-secondary mb-0">{step.text}</p>
+            </div>
+            
+            <div className="col-lg-5 d-none d-lg-block">
+              <div className="position-relative">
+                <div 
+                  className="bg-primary rounded-4 p-5 shadow-lg"
+                  style={{
+                    transform: 'rotate(-3deg)',
+                    backdropFilter: 'blur(10px)',
+                  }}
+                >
+                  <div className="text-center">
+                    <div className="display-1 mb-3">⭐️</div>
+                    <h3 className="h2 fw-bold mb-2">4.2/5.0</h3>
+                    <p className="mb-0 opacity-75">Average Student Rating</p>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="modules" className="pb-5">
+      {/* Stats Bar */}
+      <section className="bg-primary text-white py-4">
         <div className="container">
-          <div className="d-flex justify-content-between align-items-end mb-4">
-            <div>
-              <h2 className="fw-bold mb-1">Featured modules</h2>
-              <p className="text-secondary mb-0">Most-reviewed modules this semester</p>
+          <div className="row text-center g-4">
+            <div className="col-md-4">
+              <div className="h2 fw-bold mb-0">500+</div>
+              <div className="small opacity-75">Student Reviews</div>
             </div>
+            <div className="col-md-4">
+              <div className="h2 fw-bold mb-0">50+</div>
+              <div className="small opacity-75">Modules Reviewed</div>
+            </div>
+            <div className="col-md-4">
+              <div className="h2 fw-bold mb-0">100%</div>
+              <div className="small opacity-75">Verified Students</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-5 bg-light">
+        <div className="container py-5">
+          <div className="text-center mb-5">
+            <h2 className="display-4 fw-bold mb-3">How It Works</h2>
+            <p className="lead text-muted">Three simple steps to better module choices</p>
           </div>
 
           <div className="row g-4">
-            {featuredModules.map((module) => (
-              <div className="col-md-6 col-lg-4" key={module.code}>
-                <div className="card h-100 border-0 shadow-sm">
-                  <div className="card-body">
-                    <p className="small text-secondary mb-2">{module.code}</p>
-                    <h3 className="h5 mb-2">{module.name}</h3>
-                    <p className="text-secondary mb-3">{module.detail}</p>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span className="badge text-bg-success">{module.rating}</span>
-                      <span className="text-secondary small">{module.reviews} reviews</span>
+            <div className="col-md-4">
+              <div className="card border-0 shadow-sm h-100 hover-lift">
+                <div className="card-body p-4">
+                  <div 
+                    className="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3"
+                    style={{ width: '60px', height: '60px', fontSize: '1.5rem' }}
+                  >
+                    1
+                  </div>
+                  <h3 className="h4 fw-bold mb-3">Sign In</h3>
+                  <p className="text-muted mb-0">
+                    Verify your university email to access authentic student reviews and join the community.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-4">
+              <div className="card border-0 shadow-sm h-100 hover-lift">
+                <div className="card-body p-4">
+                  <div 
+                    className="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3"
+                    style={{ width: '60px', height: '60px', fontSize: '1.5rem' }}
+                  >
+                    2
+                  </div>
+                  <h3 className="h4 fw-bold mb-3">Browse & Read</h3>
+                  <p className="text-muted mb-0">
+                    Explore modules by course, read detailed reviews, and see ratings for teaching, assessments, and more.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-4">
+              <div className="card border-0 shadow-sm h-100 hover-lift">
+                <div className="card-body p-4">
+                  <div 
+                    className="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3"
+                    style={{ width: '60px', height: '60px', fontSize: '1.5rem' }}
+                  >
+                    3
+                  </div>
+                  <h3 className="h4 fw-bold mb-3">Share Your Voice</h3>
+                  <p className="text-muted mb-0">
+                    Leave your own reviews to help future students make informed decisions about their education.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section className="py-5">
+        <div className="container py-5">
+          <div className="row align-items-center g-5">
+            <div className="col-lg-6">
+              <div className="pe-lg-5">
+                <h2 className="display-5 fw-bold mb-4">
+                  Why Students Trust Our Reviews
+                </h2>
+                <p className="lead text-muted mb-4">
+                  Every review comes from a verified university student. No fake accounts, 
+                  no marketing bias—just honest feedback from your peers.
+                </p>
+                
+                <div className="d-flex gap-3 mb-3">
+                  <div className="flex-shrink-0">
+                    <div 
+                      className="bg-primary bg-opacity-10 text-primary rounded d-flex align-items-center justify-content-center"
+                      style={{ width: '48px', height: '48px' }}
+                    >
+                      ✓
                     </div>
                   </div>
+                  <div>
+                    <h4 className="fw-bold mb-1">Verified Students Only</h4>
+                    <p className="text-muted mb-0">All reviews require university email verification</p>
+                  </div>
+                </div>
+
+                <div className="d-flex gap-3 mb-3">
+                  <div className="flex-shrink-0">
+                    <div 
+                      className="bg-primary bg-opacity-10 text-primary rounded d-flex align-items-center justify-content-center"
+                      style={{ width: '48px', height: '48px' }}
+                    >
+                      ⭐
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="fw-bold mb-1">Detailed Ratings</h4>
+                    <p className="text-muted mb-0">Teaching quality, assessment fairness, content, and support</p>
+                  </div>
+                </div>
+
+                <div className="d-flex gap-3">
+                  <div className="flex-shrink-0">
+                    <div 
+                      className="bg-primary bg-opacity-10 text-primary rounded d-flex align-items-center justify-content-center"
+                      style={{ width: '48px', height: '48px' }}
+                    >
+                      💬
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="fw-bold mb-1">Real Experiences</h4>
+                    <p className="text-muted mb-0">Written feedback from students who took the module</p>
+                  </div>
                 </div>
               </div>
-            ))}
+            </div>
+
+            <div className="col-lg-6">
+              <div className="bg-dark text-white rounded-4 p-5 shadow-lg">
+                <div className="mb-4">
+                  <div className="d-flex align-items-center gap-2 mb-2">
+                    <span className="text-warning">★★★★★</span>
+                    <span className="fw-bold">5.0</span>
+                  </div>
+                  <h5 className="fw-bold mb-2">Software Engineering</h5>
+                  <p className="small text-white-50 mb-3">Year 2 • 15 Credits</p>
+                  <p className="mb-0 opacity-75">
+                    "Great module with practical applications. The coursework really 
+                    helped me understand real-world software development practices."
+                  </p>
+                </div>
+                <div className="border-top border-secondary pt-3">
+                  <small className="text-white-50">Verified Student • Computer Science</small>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="cta" className="py-5 bg-white border-top">
-        <div className="container text-center">
-          <h2 className="fw-bold mb-3">Ready to review your modules?</h2>
-          <p className="text-secondary mb-4">
-            Sign in with your student account and help improve module transparency at the
-            University of Derby.
+      {/* CTA Section */}
+      <section className="bg-primary text-white py-5">
+        <div className="container text-center py-5">
+          <h2 className="display-4 fw-bold mb-4">Ready to Make Better Module Choices?</h2>
+          <p className="lead mb-4 opacity-75">
+            Join hundreds of students using real reviews to plan their academic journey
           </p>
-          <a href="#" className="btn btn-primary btn-lg px-5">
-            Start Reviewing
-          </a>
+            <Link href="/courses" className="btn btn-light btn-lg px-5 py-3">
+              Browse Modules Now
+            </Link>
+         
+
         </div>
       </section>
-    </div>
-  );
+
+      <style jsx>{`
+        .hover-lift {
+          transition: transform 0.2s ease;
+        }
+        .hover-lift:hover {
+          transform: translateY(-4px);
+        }
+      `}</style>
+    </>
+  )
 }
