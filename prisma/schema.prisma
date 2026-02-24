@@ -1,26 +1,34 @@
+// Prisma schema for Module Review App
+// Database: PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
- 
-generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
-}
- 
+
+// ============================================
+// NextAuth.js required tables
+// ============================================
+
 model User {
-  id            String          @id @default(cuid())
-  name          String?
-  email         String          @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  reviews       Review[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String    @id @default(cuid())
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  course         String?
+  enrollmentYear Int?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  reviews        Review[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
- 
+
 model Account {
   userId            String
   type              String
@@ -33,79 +41,96 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
- 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+  user              User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@id([provider, providerAccountId])
 }
- 
+
 model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  @@id([sessionToken])
 }
- 
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@id([identifier, token])
 }
- 
+
+// ============================================
+// Application tables
+// ============================================
 
 model Course {
-  id          String   @id @default(cuid())
-  name        String
-  slug        String   @unique
-  description String?
-  modules     Module[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String         @id @default(cuid())
+  name          String         @unique
+  slug          String         @unique
+  description   String?
+  courseModules CourseModule[] // Many-to-many with Module
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model Module {
   id          String   @id @default(cuid())
   name        String
-  slug        String
-  code        String
-  year        Int
-  credits     Int
-  semester    String
+  slug        String   @unique
+  year        Int?
+  credits     Int?
   description String?
-  courseId    String
-  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  reviews     Review[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  
+  // Cached aggregate ratings (recalculated when reviews are added/updated)
+  teachingRating    Decimal @default(0) @db.Decimal(3, 2)
+  assessmentRating  Decimal @default(0) @db.Decimal(3, 2)
+  contentRating     Decimal @default(0) @db.Decimal(3, 2)
+  supportRating     Decimal @default(0) @db.Decimal(3, 2)
+  overallRating     Decimal @default(0) @db.Decimal(3, 2)
+  reviewCount       Int     @default(0)
+  
+  courseModules CourseModule[]
+  reviews       Review[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@unique([courseId, slug])
-  @@unique([courseId, code])
-  @@index([courseId, year])
+  @@index([year])
+}
+
+model CourseModule {
+  id        String  @id @default(cuid())
+  courseId  String
+  moduleId  String
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  
+  @@unique([courseId, moduleId]) // Prevent duplicate course-module pairs
+  @@index([courseId])
+  @@index([moduleId])
 }
 
 model Review {
   id               String   @id @default(cuid())
   userId           String
   moduleId         String
-  teachingRating   Int
-  assessmentRating Int
-  contentRating    Int
-  supportRating    Int
-  overallRating    Float
-  feedback         String
+  teachingRating   Int      // 1-5
+  assessmentRating Int      // 1-5
+  contentRating    Int      // 1-5
+  supportRating    Int      // 1-5
+  overallRating    Decimal  @db.Decimal(3, 2) // Calculated average or user-set
+  feedback         String   @db.Text
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  module           Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, moduleId])
+  @@unique([userId, moduleId]) // One review per user per module
   @@index([moduleId, createdAt])
+  @@index([userId])
 }
