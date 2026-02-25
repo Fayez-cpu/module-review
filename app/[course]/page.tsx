@@ -1,5 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import CourseClient from './CourseClient'
+import { auth } from '@/auth'
+
 
 type Props = {
   params: Promise<{

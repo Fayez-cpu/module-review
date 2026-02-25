@@ -84,7 +84,6 @@ model Module {
   year        Int?
   credits     Int?
   description String?
-  
   // Cached aggregate ratings (recalculated when reviews are added/updated)
   teachingRating    Decimal @default(0) @db.Decimal(3, 2)
   assessmentRating  Decimal @default(0) @db.Decimal(3, 2)

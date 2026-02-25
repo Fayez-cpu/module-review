@@ -9,4 +9,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       apiKey: process.env.RESEND_API_KEY,
       from: "no-reply@faizstudio.co.uk",  // Your verified domain
     })],
+    session: {
+      strategy: "database",
+    },
+    callbacks: {
+      async session({ session, user }) {
+        session.user.id = user.id
+        return session
+      }
+    },
 })
