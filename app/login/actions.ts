@@ -3,7 +3,7 @@
 import { signIn } from "@/auth"
 
 export async function requestMagicLink(formData: FormData) {
-  const studentId = String(formData.get("studentId") ?? "").trim()
+  const studentId = String(formData.get("email") ?? "").trim()
 
   // Validate it's a number
   if (!/^\d+$/.test(studentId)) {
