@@ -79,7 +79,6 @@ export default function ModuleClient({ module, courseSlug, session, userReview }
       console.log(session)
       const reviewResult = await SubmitReview(formData)
       console.log("result it")
-      console.log(reviewResult)
     } catch (error) {
       alert('Failed to submit review. Please try again.')
       setSubmitting(false)
@@ -291,9 +290,6 @@ export default function ModuleClient({ module, courseSlug, session, userReview }
                 <div key={review.id} className="border-bottom pb-3">
                   <div className="d-flex justify-content-between align-items-start mb-2">
                     <div>
-                      <div className="fw-semibold">
-                        {review.user.name || 'Anonymous Student'}
-                      </div>
                       <div className="small text-muted">
                         {review.user.course && `${review.user.course} • `}
                         {new Date(review.createdAt).toLocaleDateString()}
