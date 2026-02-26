@@ -12,6 +12,10 @@ export default async function LoginPage() {
   }
   }
 
+  function isValidNumber(input) {
+  return typeof input === "string" && /^[0-9]+$/.test(input);
+}
+
 
   if (session?.user){
     return (
@@ -57,20 +61,24 @@ export default async function LoginPage() {
             {/* Sign In Form */}
               <form
                 action={async (formData) => {
-                  "use server"
-                  await signIn("resend", formData)
+                  if (isValidNumber(formData.get("email"))){
+                    formData.set("email", `${formData.get("email")}@unimail.derby.ac.uk`)
+                    await signIn("resend", formData)
+                  }
+
+                  
                 }}
               >
               <div className="mb-4">
                 <label htmlFor="email" className="form-label fw-semibold">
-                  Email Address
+                  Student Number
                 </label>
                 <input
                   id="email"
                   name="email"
                   type="email"
                   className="form-control form-control-lg"
-                  placeholder="you@derby.ac.uk"
+                  placeholder="100726439"
                   required
                   autoFocus
                 />
