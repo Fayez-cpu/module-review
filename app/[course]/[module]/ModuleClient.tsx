@@ -78,6 +78,9 @@ export default function ModuleClient({ module, courseSlug, session, userReview }
       // Refresh page to show new review
       console.log(session)
       const reviewResult = await SubmitReview(formData)
+      if (reviewResult?.success){
+        location.reload();
+      }
       console.log("result it")
     } catch (error) {
       alert('Failed to submit review. Please try again.')
