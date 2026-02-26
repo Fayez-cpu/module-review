@@ -61,6 +61,7 @@ export default async function LoginPage() {
             {/* Sign In Form */}
               <form
                 action={async (formData) => {
+                  "use server"
                   if (isValidNumber(formData.get("email"))){
                     formData.set("email", `${formData.get("email")}@unimail.derby.ac.uk`)
                     await signIn("resend", formData)
