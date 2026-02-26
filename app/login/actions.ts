@@ -1,16 +1,21 @@
-"use server";
+"use server"
 
-import { signIn } from "@/auth";
+import { signIn } from "@/auth"
 
 export async function requestMagicLink(formData: FormData) {
-  const email = String(formData.get("email") ?? "").trim();
+  const studentId = String(formData.get("studentId") ?? "").trim()
 
-  if (!email) {
-    return;
+  // Validate it's a number
+  if (!/^\d+$/.test(studentId)) {
+    throw new Error("Student ID must be numeric")
   }
 
-  await signIn("email", {
-    email,
+  // Construct university email
+  const email = `${studentId}@unimail.derby.ac.uk`
+  formData.set("email", email)
+
+    await signIn("resend", {
+    formData,
     redirectTo: "/onboarding",
-  });
+  })
 }

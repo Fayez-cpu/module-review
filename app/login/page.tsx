@@ -1,6 +1,7 @@
 import { signIn } from "@/auth"
 import { auth } from "@/auth" 
 import { redirect } from "next/navigation"
+import { requestMagicLink } from "./actions"
 // app/login/page.tsx
 
 export default async function LoginPage() {
@@ -60,15 +61,7 @@ export default async function LoginPage() {
 
             {/* Sign In Form */}
               <form
-                action={async (formData) => {
-                  "use server"
-                  if (isValidNumber(formData.get("email"))){
-                    formData.set("email", `${formData.get("email")}@unimail.derby.ac.uk`)
-                    await signIn("resend", formData)
-                  }
-
-                  
-                }}
+                action={requestMagicLink}
               >
               <div className="mb-4">
                 <label htmlFor="email" className="form-label fw-semibold">
