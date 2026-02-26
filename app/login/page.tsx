@@ -70,7 +70,7 @@ export default async function LoginPage() {
                 <input
                   id="email"
                   name="email"
-                  type="email"
+                  type="text"
                   className="form-control form-control-lg"
                   placeholder="100726439"
                   required
