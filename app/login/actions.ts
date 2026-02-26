@@ -15,7 +15,7 @@ export async function requestMagicLink(formData: FormData) {
   formData.set("email", email)
 
     await signIn("resend", {
-    formData,
+    email,
     redirectTo: "/onboarding",
   })
 }
