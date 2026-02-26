@@ -60,9 +60,16 @@ export default async function LoginPage() {
             </div>
 
             {/* Sign In Form */}
-              <form
-                action={requestMagicLink}
-              >
+<form
+  action={async (formData: FormData) => {
+    "use server"
+
+    await signIn("resend", {
+      formData,
+      redirectTo: "/onboarding",
+    })
+  }}
+>
               <div className="mb-4">
                 <label htmlFor="email" className="form-label fw-semibold">
                   Student Number

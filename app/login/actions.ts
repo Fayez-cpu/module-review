@@ -7,6 +7,7 @@ export async function requestMagicLink(formData: FormData) {
 
   // Construct university email
 
+    
 
     await signIn("resend", {
     formData,
