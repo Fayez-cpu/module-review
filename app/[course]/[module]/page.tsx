@@ -20,7 +20,6 @@ async function getModuleWithReviews(moduleSlug: string) {
             select: {
               name: true,
               course: true,
-              enrollmentYear: true,
             },
           },
         },
@@ -47,7 +46,8 @@ export default async function ModulePage({ params }: Props) {
   const session = await auth()
   
   const moduleData = await getModuleWithReviews(moduleSlug)
-
+  console.log(moduleData)
+  console.log(moduleData?.courseModules)
   if (!moduleData) {
     notFound()
   }
@@ -69,7 +69,7 @@ export default async function ModulePage({ params }: Props) {
 
   // Check if user has already reviewed this module
   const userReview = session?.user
-    ? module.reviews.find((r) => r.userId === (session.user as any).id)
+    ? module.reviews.find((r) => r.userId === (session.user.id))
     : null
 
   return (

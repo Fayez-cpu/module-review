@@ -2,6 +2,10 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import SubmitReview from './SubmitReview'
+import { submitReviewy } from '@/app/lib/actions'
+
 
 type Review = {
   id: string
@@ -66,10 +70,16 @@ export default function ModuleClient({ module, courseSlug, session, userReview }
 
   async function handleSubmit(formData: FormData) {
     setSubmitting(true)
+    if (!session?.user.course){
+      redirect("/onboarding")
+    }
     try {
       
       // Refresh page to show new review
-      window.location.reload()
+      console.log(session)
+      const reviewResult = await SubmitReview(formData)
+      console.log("result it")
+      console.log(reviewResult)
     } catch (error) {
       alert('Failed to submit review. Please try again.')
       setSubmitting(false)
@@ -79,20 +89,7 @@ export default function ModuleClient({ module, courseSlug, session, userReview }
   return (
     <main className="py-5 bg-light min-vh-100">
       <div className="container">
-        {/* Breadcrumb */}
-        <nav aria-label="breadcrumb" className="mb-4">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <Link href="/courses">Courses</Link>
-            </li>
-            <li className="breadcrumb-item">
-              <Link href={`/${courseSlug}`}>
-                {module.courseModules[0]?.course.name}
-              </Link>
-            </li>
-            <li className="breadcrumb-item active">{module.name}</li>
-          </ol>
-        </nav>
+
 
         {/* Module Header */}
         <div className="bg-white rounded-3 shadow-sm p-4 mb-4">
@@ -235,8 +232,7 @@ export default function ModuleClient({ module, courseSlug, session, userReview }
                     name="feedback"
                     className="form-control"
                     rows={4}
-                    placeholder="Share your experience with this module..."
-                    required
+                    placeholder="Share your experience with this module (optional)"
                   ></textarea>
                 </div>
 

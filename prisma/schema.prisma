@@ -122,7 +122,7 @@ model Review {
   contentRating    Int      // 1-5
   supportRating    Int      // 1-5
   overallRating    Decimal  @db.Decimal(3, 2) // Calculated average or user-set
-  feedback         String   @db.Text
+  feedback         String?   @db.Text
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   

@@ -17,7 +17,7 @@ export type SubmitReviewResult = {
   message: string;
 };
 
-export async function submitReview(formData: FormData): Promise<SubmitReviewResult> {
+export async function submitReviewy(formData: FormData): Promise<SubmitReviewResult> {
   const parsed = submitReviewSchema.safeParse({
     courseSlug: formData.get("courseSlug"),
     moduleSlug: formData.get("moduleSlug"),

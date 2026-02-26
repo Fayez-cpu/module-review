@@ -1,12 +1,18 @@
 import { signIn } from "@/auth"
 import { auth } from "@/auth" 
-
-
+import { redirect } from "next/navigation"
 // app/login/page.tsx
 
 export default async function LoginPage() {
   const session = await auth()
   console.log('Current session:', session?.user)
+  if (session?.user){
+      if (!session?.user?.course){
+    redirect("/onboarding")
+  }
+  }
+
+
   if (session?.user){
     return (
       <main className="min-vh-100 d-flex align-items-center justify-content-center bg-light py-5">
