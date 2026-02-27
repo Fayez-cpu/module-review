@@ -63,9 +63,10 @@ export default async function LoginPage() {
 <form
   action={async (formData: FormData) => {
     "use server"
-
+    console.log(formData)
+    const email = formData.get("email")
     await signIn("resend", {
-      formData,
+      email,
       redirectTo: "/onboarding",
     })
   }}
