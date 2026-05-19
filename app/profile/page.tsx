@@ -24,12 +24,7 @@ async function getUserWithReviews(userId: string) {
             select: {
               name: true,
               slug: true,
-              courseModules: {
-                take: 1,
-                select: {
-                  course: { select: { slug: true } },
-                },
-              },
+              year: true,
             },
           },
         },
