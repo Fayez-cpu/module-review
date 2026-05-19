@@ -1,2 +1,2 @@
--- Seeding courses
+-- Seeding courses here
 
