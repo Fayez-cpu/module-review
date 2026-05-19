@@ -1,12 +1,23 @@
 import { signIn } from "@/auth"
 import { auth } from "@/auth" 
-
-
+import { redirect } from "next/navigation"
+import { requestMagicLink } from "./actions"
 // app/login/page.tsx
 
 export default async function LoginPage() {
   const session = await auth()
   console.log('Current session:', session?.user)
+  if (session?.user){
+      if (!session?.user?.course){
+    redirect("/onboarding")
+  }
+  }
+
+  function isValidNumber(input) {
+  return typeof input === "string" && /^[0-9]+$/.test(input);
+}
+
+
   if (session?.user){
     return (
       <main className="min-vh-100 d-flex align-items-center justify-content-center bg-light py-5">
@@ -49,22 +60,27 @@ export default async function LoginPage() {
             </div>
 
             {/* Sign In Form */}
-              <form
-                action={async (formData) => {
-                  "use server"
-                  await signIn("resend", formData)
-                }}
-              >
+<form
+  action={async (formData: FormData) => {
+    "use server"
+    console.log(formData)
+    const email = formData.get("email")
+    await signIn("resend", {
+      email,
+      redirectTo: "/onboarding",
+    })
+  }}
+>
               <div className="mb-4">
                 <label htmlFor="email" className="form-label fw-semibold">
-                  Email Address
+                  Student Number
                 </label>
                 <input
                   id="email"
                   name="email"
-                  type="email"
+                  type="text"
                   className="form-control form-control-lg"
-                  placeholder="you@derby.ac.uk"
+                  placeholder="100726439"
                   required
                   autoFocus
                 />

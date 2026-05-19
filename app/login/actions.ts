@@ -1,16 +1,16 @@
-"use server";
+"use server"
 
-import { signIn } from "@/auth";
+import { signIn } from "@/auth"
 
 export async function requestMagicLink(formData: FormData) {
-  const email = String(formData.get("email") ?? "").trim();
 
-  if (!email) {
-    return;
-  }
 
-  await signIn("email", {
-    email,
+  // Construct university email
+
+    
+
+    await signIn("resend", {
+    formData,
     redirectTo: "/onboarding",
-  });
+  })
 }
