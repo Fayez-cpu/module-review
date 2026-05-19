@@ -10,9 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ============================================
-// NextAuth.js required tables
-// ============================================
+
 
 model User {
   id             String    @id @default(cuid())
@@ -63,9 +61,6 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
-// ============================================
-// Application tables
-// ============================================
 
 model Course {
   id            String         @id @default(cuid())
