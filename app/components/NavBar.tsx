@@ -36,6 +36,9 @@ export default function Navbar() {
                   </span>
                 </li>
                 <li className="nav-item">
+                  <Link href="/profile" className="nav-link">Profile</Link>
+                </li>
+                <li className="nav-item">
                   <button
                     onClick={() => signOut({ callbackUrl: '/' })}
                     className="nav-link btn btn-link text-decoration-none"
