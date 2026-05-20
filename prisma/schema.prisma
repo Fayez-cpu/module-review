@@ -128,3 +128,11 @@ model Review {
   @@index([moduleId, createdAt])
   @@index([userId])
 }
+model AuditLog {
+  id        String   @id @default(cuid())
+  email     String
+  action    String
+  success   Boolean
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
